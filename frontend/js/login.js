@@ -29,6 +29,10 @@ toggleBtn.addEventListener("click", () => {
 // Login Form Submit
 // -------------------------
 loginForm.addEventListener("submit", async (e) => {
+  if (!loginForm.checkValidity()) {
+    return; // validation.js will handle UI
+  }
+
   e.preventDefault();
 
   const email = document.getElementById("email")?.value;

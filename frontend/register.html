@@ -20,6 +20,7 @@ connect-src 'self' http://localhost:5000 https://unpkg.com;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../frontend/css/register.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-slate-50 dark:bg-gray-900 min-h-screen flex flex-col transition-colors">
@@ -41,43 +42,67 @@ connect-src 'self' http://localhost:5000 https://unpkg.com;
     </div>
 
     <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl border border-slate-200 dark:border-gray-700">
-      <form id="registerForm" class="space-y-4">
+      <form id="registerForm" class="space-y-4 needs-validation" novalidate>
         <!-- Full Name -->
         <div>
           <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Full Name</label>
           <input id="name" type="text" required placeholder="Nilesh Bagade"
-            class="mt-1 w-full px-4 py-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            class="mt-1 w-full px-4 py-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none form-control">
+          <div class="invalid-feedback">
+            Full name is required.
+          </div>
+          <div class="valid-feedback">
+            Looks good.
+          </div>
         </div>
 
         <!-- Email -->
         <div>
           <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Email</label>
           <input id="email" type="email" required placeholder="nilesh345@gmail.com"
-            class="mt-1 w-full px-4 py-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none">
-          <p id="emailError" class="text-red-500 text-sm hidden mt-1">Please enter a valid email.</p>
+            class="mt-1 w-full px-4 py-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none form-control">
+          <div class="invalid-feedback">
+            Please enter a valid email address.
+          </div>
+          <div class="valid-feedback">
+            Valid email.
+          </div>
+          <!-- <p id="emailError" class="text-red-500 text-sm hidden mt-1">Please enter a valid email.</p> -->
         </div>
 
         <!-- Password -->
         <div class="relative">
           <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Password</label>
           <input id="password" type="password" required placeholder="••••••••"
-            class="mt-1 w-full px-4 py-3 pr-12 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            class="mt-1 w-full px-4 py-3 pr-12 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none form-control">
+          <div class="invalid-feedback">
+            Password must be at least 8 characters.
+          </div>
+          <div class="valid-feedback">
+            Strong password.
+          </div>
           <button type="button" id="togglePassword" class="absolute right-4 top-[38px] text-gray-400 hover:text-indigo-600">
             <i data-lucide="eye" id="eyeIcon"></i>
           </button>
-          <p id="passwordError" class="text-red-500 text-sm hidden mt-1">Password must be at least 8 characters.</p>
+          <!-- <p id="passwordError" class="text-red-500 text-sm hidden mt-1">Password must be at least 8 characters.</p> -->
         </div>
 
         <!-- Role -->
         <div>
           <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Role</label>
           <select id="role" required
-            class="mt-1 w-full px-4 py-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
+            class="mt-1 w-full px-4 py-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer form-select">
             <option value="" disabled selected>Choose your role</option>
             <option value="student">Student</option>
             <option value="recruiter">Recruiter</option>
             <option value="admin">Placement Officer</option>
           </select>
+          <div class="invalid-feedback">
+            Please select a role.
+          </div>
+          <div class="valid-feedback">
+            Looks good.
+          </div>
         </div>
 
         <!-- Submit -->
@@ -97,6 +122,7 @@ connect-src 'self' http://localhost:5000 https://unpkg.com;
 </main>
 
 <!-- REGISTER JS: Backend Connected -->
+ <script src="../frontend/js/validation.js"></script>
 <script src="../frontend/js/register.js" defer></script>
 <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2026/01/29/16/20260129163015-0ZV4O3BK.js" defer></script>

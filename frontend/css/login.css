@@ -108,3 +108,24 @@ body {
   opacity: 0;
   transform: translateY(1.5rem);
 }
+
+
+/* =========================
+   Bootsrap Validation
+========================= */
+
+
+.invalid-feedback,
+.valid-feedback {
+  display: none;
+}
+
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.was-validated .form-select:invalid ~ .invalid-feedback {
+  display: block;
+}
+
+.was-validated .form-control:valid ~ .valid-feedback,
+.was-validated .form-select:valid ~ .valid-feedback {
+  display: block;
+}
