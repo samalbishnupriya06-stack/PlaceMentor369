@@ -12,15 +12,24 @@
     body { background: linear-gradient(to bottom right, #eef2ff, #ffffff, #eff6ff); color: #1f2937; }
     .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-    /* HEADER */
-    .header { background: #fff; padding: 16px 0; }
+    /* HEADER & RESPONSIVE NAVBAR */
+    .header { background: #fff; padding: 16px 0; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 1000; }
     .nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 22px; font-weight: 700; }
-    nav a { margin: 0 12px; text-decoration: none; color: #374151; font-weight: 500; }
+    .logo { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    
+    /* Navigation Menu Links Wrapper */
+    .nav-menu { display: flex; align-items: center; }
+    .nav-menu a { margin: 0 12px; text-decoration: none; color: #374151; font-weight: 500; transition: color 0.2s; }
+    .nav-menu a:hover { color: #4f46e5; }
     .login { color: #4f46e5; }
-    .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; }
-    .primary { background: #161533; color: #fff; }
+    
+    .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; }
+    .primary { background: #161533; color: #fff !important; }
+    .primary:hover { background: #23214d; color: #fff !important; }
     .secondary { background: #e5e7eb; color: #374151; }
+
+    /* Mobile Hamburger Menu Toggle Button Button */
+    .menu-toggle { display: none; background: none; border: none; font-size: 24px; color: #374151; cursor: pointer; }
 
     /* HERO */
     .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 80px 0; align-items: center; }
@@ -29,69 +38,53 @@
     .hero p { font-size: 18px; color: #6b7280; line-height: 1.5; }
 
     .features { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin: 30px 0; }
-.feature {
-  display: flex;
-  gap: 12px;
-  background: #fff;
-  padding: 14px;
-  border-radius: 12px;
-  align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+    .feature {
+      display: flex;
+      gap: 12px;
+      background: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.feature:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}    .feature h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .feature:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }    
+    .feature h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
     .feature p { font-size: 14px; color: #6b7280; }
 
     .cta { display: flex; gap: 14px; margin-top: 20px; }
     .cta button { flex: 1; text-align: center; }
 
     /* HERO IMAGE */
-.hero-right {
-  position: relative;
-  top: -8px;
-}
+    .hero-right { position: relative; top: -8px; }
+    .hero-right img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
 
-.hero-right img {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
-  display: block;
-  border-radius: 20px;
-}
-
-
-
-/* ADD THIS RIGHT HERE 👇 */
-.hero-img-wrapper {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.hero-img-wrapper::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom right,
-    rgba(79,70,229,0.08),
-    rgba(255,255,255,0.02)
-  );
-}
-
-
+    .hero-img-wrapper { position: relative; border-radius: 20px; overflow: hidden; }
+    .hero-img-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom right,
+        rgba(79,70,229,0.08),
+        rgba(255,255,255,0.02)
+      );
+    }
 
     .stats-card { position: absolute; bottom: -32px; left: -32px; background: #ffffff; padding: 16px 20px; border-radius: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 12px 24px rgba(0,0,0,0.12); z-index: 10; }
     .stats-card strong { font-size: 24px; font-weight: 700; color: #111827; }
     .stats-card span { display: block; font-size: 14px; color: #6b7280; }
-    .stats-card div {
-  text-align: center;
-}
-
+    .stats-card div { text-align: center; }
 
     /* FOOTER */
     footer { background: #0f172a; color: #f8fafc; padding: 80px 0 40px; }
@@ -122,150 +115,122 @@
     .close-portal { cursor: pointer; font-size: 24px; color: #64748b; transition: color 0.2s; }
     .close-portal:hover { color: #ef4444; }
 
+    /* RESPONSIVE BREAKPOINTS WITH MOBILE DROPDOWN NAVIGATION FIX */
     @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-    }
+      .menu-toggle { display: block; }
+      
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-top: 1px solid #f3f4f6;
+        gap: 16px;
+        text-align: center;
+      }
+      
+      .nav-menu.active { display: flex; }
+      .nav-menu a { margin: 8px 0; width: 100%; font-size: 16px; }
+      .nav-menu .btn { width: 100%; justify-content: center; }
 
-    /* MODAL */
-    .modal { position: fixed; inset: 0; display: none; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
-    .modal-box { background: #fff; padding: 30px; border-radius: 16px; width: 360px; }
-    .modal-box input { width: 100%; padding: 10px; margin: 10px 0; }
-    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
       .hero { grid-template-columns: 1fr; gap: 30px; text-align: center; }
       .hero-left { order: 2; }
       .hero-right { order: 1; }
       .features { grid-template-columns: 1fr; }
+      .feature-wide { grid-column: span 1; }
       .cta { flex-direction: column; }
       .stats-card { left: 50%; transform: translateX(-50%); bottom: -24px; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
     }
-     .btn i {
-  margin-left: 6px;
-  font-size: 14px;
-}
-footer h3,
-footer h4 {
-  color: #ffffff;
-}
-.feature-wide {
-  grid-column: span 2;        /* covers both columns */
-  background: #ffffff;
-  padding: 18px 22px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
 
-.feature-wide:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-}
-.feature-wide:hover .fa-arrow-right {
-  transform: translateX(4px);
-  transition: transform 0.2s ease;
-}
-
-
-.feature-wide--big {
-  width: calc(100% + 300px);
-  margin-left: -1px;
-}
-
-/* Make last wide box text same as normal feature boxes */
-.feature-wide h4 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.feature-wide p {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.ai-icon {
-  color: #4c45ce;               /* same as primary button */
-  background: #eef2ff;          /* soft indigo bg */
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
-  <div class="container nav">
-    <div class="logo"><i class="fa-solid fa-arrow-up-right-dots"></i> <span>PlacementorAI</span></div>
-    <nav>
+  <div class="container nav" style="position: relative;">
+    <div class="logo">
+      <i class="fa-solid fa-arrow-up-right-dots"></i> 
+      <span>PlacementorAI</span>
+    </div>
+    
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+      <i class="fa-solid fa-bars" id="menu-icon"></i>
+    </button>
+
+    <nav class="nav-menu" id="nav-links-target">
       <a href="index.html">Home</a>
       <a href="contact.html">Contact</a>
       <a href="register.html">Sign Up</a>
       <a href="login.html" class="login">Login</a>
-
-<a  href="register.html" class="btn primary">
-  Get Started
-  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-</a>    </nav>
+      <a href="register.html" class="btn primary" style="color: #ffffff !important;">
+        Get Started
+        <i class="fa-solid fa-arrow-up-right-from-square" style="color: #ffffff !important;"></i>
+      </a>    
+    </nav>
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero container">
   <div class="hero-left">
     <span class="badge">Smart Placement Platform for Students & Recruiters</span>
     <h1>Manage Jobs, Applications,<br/>and Placements Effortlessly</h1>
     <p>Post jobs, apply to opportunities, and track the hiring process in one centralized platform. Students build profiles, recruiters manage applicants, admins monitor stats.</p>
-    <div class="features">
-      <div class="feature">     <i class="fa-solid fa-clipboard-list"></i>
-
-<div><h4>Job Listings</h4><p>Students can explore and apply to jobs</p></div></div>
-      <div class="feature"><i class="fa-regular fa-id-card"></i><div><h4>Profile Management</h4><p>Students manage academic & skill profiles</p></div></div>
-      <div class="feature"><i class="fa-solid fa-user-check"></i><div><h4>Applicant Tracking</h4><p>Recruiters track and shortlist candidates easily</p></div></div>
-      <div class="feature"><i class="fa-solid fa-circle-check"></i><div><h4>Status Updates</h4><p>Track application progress in real-time</p></div></div>
-<a href="recommendations.html" style="text-decoration:none; color:inherit;">
-  <div class="feature-wide feature-wide--big">
-<i class="fa-solid fa-brain ai-icon"></i>
-    <div>
-      <h4>AI-Recommended Learning Path</h4>
-      <p>
-        Get curated videos and resources based on your course, skills, and career goals
-      </p>
-      
-    </div>
-    <i class="fa-solid fa-arrow-right" style="margin-left:auto; color:#000000;"></i>
-  </div>
-</a>
- </div>
     
-  </div>
-  <div class="hero-right">
-  <div class="hero-img-wrapper">
-    <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b" alt="students"/>
-  </div>
-  <div class="stats-card">
-    <div>
-      <strong>3,000+</strong>
-      <span>Students Placed</span>
+    <div class="features">
+      <div class="feature">     
+        <i class="fa-solid fa-clipboard-list"></i>
+        <div><h4>Job Listings</h4><p>Students can explore and apply to jobs</p></div>
+      </div>
+      <div class="feature">
+        <i class="fa-regular fa-id-card"></i>
+        <div><h4>Profile Management</h4><p>Students manage academic & skill profiles</p></div>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-user-check"></i>
+        <div><h4>Applicant Tracking</h4><p>Recruiters track and shortlist candidates easily</p></div>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-circle-check"></i>
+        <div><h4>Status Updates</h4><p>Track application progress in real-time</p></div>
+      </div>
+      
+      <a href="recommendations.html" style="text-decoration:none; color:inherit; grid-column: span 1;" class="feature-wide-anchor">
+        <div class="feature-wide feature-wide--big">
+          <i class="fa-solid fa-brain ai-icon"></i>
+          <div>
+            <h4>AI-Recommended Learning Path</h4>
+            <p>Get curated videos and resources based on your course, skills, and career goals</p>
+          </div>
+          <i class="fa-solid fa-arrow-right" style="margin-left:auto; color:#000000;"></i>
+        </div>
+      </a>
     </div>
   </div>
-</div>
 
-
+  <div class="hero-right">
+    <div class="hero-img-wrapper">
+      <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b" alt="students"/>
+    </div>
+    <div class="stats-card">
+      <div>
+        <strong>3,000+</strong>
+        <span>Students Placed</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -307,7 +272,6 @@ footer h4 {
   </div>
 </footer>
 
-<!-- DOCUMENTATION PORTAL -->
 <div id="portal-overlay" class="portal-overlay">
   <div class="portal-content">
     <div class="portal-header">
@@ -320,44 +284,27 @@ footer h4 {
       <button class="portal-nav-btn" id="btn-terms" onclick="switchPortalTab('terms')">Terms</button>
     </div>
     <div class="portal-body" id="portal-body">
-      <!-- Content will be injected here -->
-    </div>
-  </div>
-</div>
-
-<!-- LOGIN MODAL -->
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <h2 id="modal-title">Login</h2>
-    <form onsubmit="login(event)">
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
-      <div class="modal-actions">
-        <button class="btn primary" type="submit">Login</button>
-        <button class="btn secondary" type="button" onclick="closeModal()">Cancel</button>
       </div>
-    </form>
   </div>
 </div>
 
-<!-- SCRIPTS -->
 <script>
-  // Modal JS
-  const modal = document.getElementById("modal");
-  const title = document.getElementById("modal-title");
+  // Mobile Hamburger Toggle Logic
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const navLinksTarget = document.getElementById('nav-links-target');
+  const menuIcon = document.getElementById('menu-icon');
 
-  function openModal(type) {
-    title.innerText = type === "student" ? "Student Login" : "Recruiter Login";
-    modal.style.display = "flex";
-  }
-
-  function closeModal() { modal.style.display = "none"; }
-
-  function login(e) {
-    e.preventDefault();
-    alert("Login successful (demo)");
-    closeModal();
-  }
+  mobileMenuBtn.addEventListener('click', () => {
+    navLinksTarget.classList.toggle('active');
+    
+    if(navLinksTarget.classList.contains('active')) {
+      menuIcon.classList.remove('fa-bars');
+      menuIcon.classList.add('fa-xmark');
+    } else {
+      menuIcon.classList.remove('fa-xmark');
+      menuIcon.classList.add('fa-bars');
+    }
+  });
 
   // DOCUMENTATION PORTAL JS
   const portalOverlay = document.getElementById('portal-overlay');
@@ -414,27 +361,19 @@ footer h4 {
   }
 
   function switchPortalTab(tab) {
-    // Update content
     portalBody.innerHTML = portalContent[tab];
-    
-    // Update active button
     document.querySelectorAll('.portal-nav-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById('btn-' + tab).classList.add('active');
-    
-    // Update title
     const titles = { faq: 'FAQ', privacy: 'Privacy Policy', terms: 'Terms of Service' };
     portalTitle.innerText = titles[tab];
   }
 
-  // Close on overlay click
   portalOverlay.addEventListener('click', (e) => {
     if (e.target === portalOverlay) closePortal();
   });
 </script>
 <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2026/01/29/16/20260129163015-0ZV4O3BK.js" defer></script>
-
-<!-- Botpress Chatbot Scripts -->
 
 </body>
 </html>

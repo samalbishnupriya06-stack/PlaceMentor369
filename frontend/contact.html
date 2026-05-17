@@ -4,16 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About – PlacementorAI</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- GSAP -->
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -30,14 +26,15 @@
       overflow-x: hidden;
     }
 
-    /* Navbar */
+    /* Navbar styling with responsive structure updates */
     .header {
       background: #fff;
       padding: 16px 0;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #e5e7eb;
     }
 
     .nav {
@@ -49,14 +46,24 @@
       padding: 0 20px;
     }
 
-    nav a {
+    .nav-menu {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-menu a {
       margin: 0 12px;
       text-decoration: none;
       color: #374151;
       font-weight: 500;
+      transition: color 0.2s;
     }
 
-    nav a.login {
+    .nav-menu a:hover {
+      color: #4f46e5;
+    }
+
+    .nav-menu a.login {
       color: #4f46e5;
       font-weight: 600;
     }
@@ -67,11 +74,28 @@
       border: none;
       cursor: pointer;
       font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
     }
 
     .btn.primary {
       background: #4f46e5;
       color: #fff;
+    }
+    
+    .btn.primary:hover {
+      background: #4338ca;
+    }
+
+    /* Mobile Hamburger Menu Toggle Button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #374151;
+      cursor: pointer;
     }
 
     section {
@@ -121,10 +145,46 @@
     .close-portal { cursor: pointer; font-size: 24px; color: #64748b; transition: color 0.2s; }
     .close-portal:hover { color: #ef4444; }
 
+    /* RESPONSIVE BREAKPOINTS WITH NAV MOBILE DRAWER UI */
     @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-top: 1px solid #f3f4f6;
+        gap: 16px;
+        text-align: center;
+      }
+      
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu a {
+        margin: 8px 0;
+        width: 100%;
+        font-size: 16px;
+      }
+
+      .nav-menu .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
     }
+
     @media (max-width: 480px) {
       .footer-grid { grid-template-columns: 1fr; }
     }
@@ -133,23 +193,26 @@
 
 <body>
 
-<!-- Navbar -->
 <header class="header">
-  <div class="nav">
+  <div class="nav" style="position: relative;">
     <div class="text-xl font-bold"><i class="fa-solid fa-arrow-up-right-dots"></i>  PlacementorAI</div>
-    <nav>
+    
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+      <i class="fa-solid fa-bars" id="menu-icon"></i>
+    </button>
+
+    <nav class="nav-menu" id="nav-links-target">
       <a href="index.html">Home</a>
       <a href="contact.html">Contact</a>
       <a href="register.html">Sign Up</a>
       <a href="login.html" class="login">Login</a>
-      <button class="btn primary">Get Started</button>
+      <a href="register.html" class="btn primary">Get Started</a>
     </nav>
   </div>
 </header>
 
 <div class="max-w-7xl mx-auto px-6 py-12">
 
-  <!-- Hero -->
   <section class="text-center fade-in">
     <h1 class="text-4xl font-bold text-indigo-600 mb-4">
       About PlacementorAI
@@ -160,7 +223,6 @@
     </p>
   </section>
 
-  <!-- Mission & Vision -->
   <section class="grid md:grid-cols-2 gap-10 fade-in">
     <div class="bg-indigo-600 text-white p-6 rounded-xl shadow-lg">
       <h2 class="text-2xl font-semibold mb-3">Our Mission</h2>
@@ -179,7 +241,6 @@
     </div>
   </section>
 
-  <!-- Features -->
   <section class="fade-in">
     <h2 class="text-3xl font-bold text-center mb-10 text-indigo-600">
       What We Offer
@@ -206,26 +267,24 @@
     </div>
   </section>
 
-  <!-- Team -->
-<section class="fade-in">
-  <h2 class="text-3xl font-bold text-center mb-10 text-indigo-600">
-    Meet the Founder
-  </h2>
+  <section class="fade-in">
+    <h2 class="text-3xl font-bold text-center mb-10 text-indigo-600">
+      Meet the Founder
+    </h2>
 
-  <div class="grid md:grid-cols-4 gap-8">
-    <div class="team-member md:col-span-4 text-center">
-      <img src="https://via.placeholder.com/120" class="mx-auto mb-3">
-      <h3 class="font-semibold text-indigo-700">
-        Nilesh Bagade
-      </h3>
-      <p class="text-sm text-slate-500">
-        Founder & Developer
-      </p>
+    <div class="grid md:grid-cols-4 gap-8">
+      <div class="team-member md:col-span-4 text-center">
+        <img src="https://via.placeholder.com/120" class="mx-auto mb-3">
+        <h3 class="font-semibold text-indigo-700">
+          Nilesh Bagade
+        </h3>
+        <p class="text-sm text-slate-500">
+          Founder & Developer
+        </p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- Support System -->
   <section class="fade-in">
     <h2 class="text-3xl font-bold text-center mb-10 text-indigo-600">
       Support & Help Center
@@ -277,7 +336,6 @@
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="text-center fade-in">
     <h2 class="text-2xl font-bold mb-4 text-indigo-600">
       Ready to get started?
@@ -290,7 +348,6 @@
 
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -332,7 +389,6 @@
   </div>
 </footer>
 
-<!-- DOCUMENTATION PORTAL -->
 <div id="portal-overlay" class="portal-overlay">
   <div class="portal-content">
     <div class="portal-header">
@@ -345,13 +401,31 @@
       <button class="portal-nav-btn" id="btn-terms" onclick="switchPortalTab('terms')">Terms</button>
     </div>
     <div class="portal-body" id="portal-body">
-      <!-- Content will be injected here -->
-    </div>
+      </div>
   </div>
 </div>
 
 
 <script>
+  // Mobile Hamburger Toggle Logic
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const navLinksTarget = document.getElementById('nav-links-target');
+  const menuIcon = document.getElementById('menu-icon');
+
+  if (mobileMenuBtn && navLinksTarget && menuIcon) {
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinksTarget.classList.toggle('active');
+      
+      if(navLinksTarget.classList.contains('active')) {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-xmark');
+      } else {
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      }
+    });
+  }
+
   lucide.createIcons();
 
   gsap.utils.toArray('.fade-in').forEach((el, i) => {
@@ -426,19 +500,13 @@
   }
 
   function switchPortalTab(tab) {
-    // Update content
     portalBody.innerHTML = portalContent[tab];
-    
-    // Update active button
     document.querySelectorAll('.portal-nav-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById('btn-' + tab).classList.add('active');
-    
-    // Update title
     const titles = { faq: 'FAQ', privacy: 'Privacy Policy', terms: 'Terms of Service' };
     portalTitle.innerText = titles[tab];
   }
 
-  // Close on overlay click
   if (portalOverlay) {
     portalOverlay.addEventListener('click', (e) => {
       if (e.target === portalOverlay) closePortal();

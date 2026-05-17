@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PlacementorAI</title>
+  <title>PlacementorAI - About Us</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
@@ -12,15 +12,24 @@
     body { background: linear-gradient(to bottom right, #eef2ff, #ffffff, #eff6ff); color: #1f2937; }
     .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-    /* HEADER */
-    .header { background: #fff; padding: 16px 0; }
+    /* HEADER & RESPONSIVE NAVBAR */
+    .header { background: #fff; padding: 16px 0; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 1000; }
     .nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 22px; font-weight: 700; }
-    nav a { margin: 0 12px; text-decoration: none; color: #374151; font-weight: 500; }
+    .logo { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    
+    /* Navigation Menu Links Wrapper */
+    .nav-menu { display: flex; align-items: center; }
+    .nav-menu a { margin: 0 12px; text-decoration: none; color: #374151; font-weight: 500; transition: color 0.2s; }
+    .nav-menu a:hover { color: #4f46e5; }
     .login { color: #4f46e5; }
-    .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; }
-    .primary { background: #161533; color: #fff; }
+    
+    .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; }
+    .primary { background: #161533; color: #fff !important; }
+    .primary:hover { background: #23214d; color: #fff !important; }
     .secondary { background: #e5e7eb; color: #374151; }
+
+    /* Mobile Hamburger Menu Toggle Button Button */
+    .menu-toggle { display: none; background: none; border: none; font-size: 24px; color: #374151; cursor: pointer; }
 
     /* HERO */
     .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 80px 0; align-items: center; }
@@ -29,69 +38,53 @@
     .hero p { font-size: 18px; color: #6b7280; line-height: 1.5; }
 
     .features { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin: 30px 0; }
-.feature {
-  display: flex;
-  gap: 12px;
-  background: #fff;
-  padding: 14px;
-  border-radius: 12px;
-  align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+    .feature {
+      display: flex;
+      gap: 12px;
+      background: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.feature:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}    .feature h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .feature:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }    
+    .feature h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
     .feature p { font-size: 14px; color: #6b7280; }
 
     .cta { display: flex; gap: 14px; margin-top: 20px; }
     .cta button { flex: 1; text-align: center; }
 
     /* HERO IMAGE */
-.hero-right {
-  position: relative;
-  top: -8px;
-}
+    .hero-right { position: relative; top: -8px; }
+    .hero-right img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
 
-.hero-right img {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
-  display: block;
-  border-radius: 20px;
-}
-
-
-
-/* ADD THIS RIGHT HERE 👇 */
-.hero-img-wrapper {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.hero-img-wrapper::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom right,
-    rgba(79,70,229,0.08),
-    rgba(255,255,255,0.02)
-  );
-}
-
-
+    .hero-img-wrapper { position: relative; border-radius: 20px; overflow: hidden; }
+    .hero-img-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom right,
+        rgba(79,70,229,0.08),
+        rgba(255,255,255,0.02)
+      );
+    }
 
     .stats-card { position: absolute; bottom: -32px; left: -32px; background: #ffffff; padding: 16px 20px; border-radius: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 12px 24px rgba(0,0,0,0.12); z-index: 10; }
     .stats-card strong { font-size: 24px; font-weight: 700; color: #111827; }
     .stats-card span { display: block; font-size: 14px; color: #6b7280; }
-    .stats-card div {
-  text-align: center;
-}
-
+    .stats-card div { text-align: center; }
 
     /* FOOTER */
     footer { background: #0f172a; color: #f8fafc; padding: 80px 0 40px; }
@@ -122,123 +115,128 @@
     .close-portal { cursor: pointer; font-size: 24px; color: #64748b; transition: color 0.2s; }
     .close-portal:hover { color: #ef4444; }
 
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-    }
-
     /* MODAL */
     .modal { position: fixed; inset: 0; display: none; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
     .modal-box { background: #fff; padding: 30px; border-radius: 16px; width: 360px; }
     .modal-box input { width: 100%; padding: 10px; margin: 10px 0; }
     .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
+    .btn i { margin-left: 6px; font-size: 14px; }
+    footer h3, footer h4 { color: #ffffff; }
+
+    .feature-wide {
+      grid-column: span 2;
+      background: #ffffff;
+      padding: 18px 22px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-wide:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+    .feature-wide:hover .fa-arrow-right { transform: translateX(4px); transition: transform 0.2s ease; }
+    
+    @media (min-width: 1025px) {
+      .feature-wide--big { width: calc(100% + 0px); margin-left: 0px; }
+    }
+
+    .feature-wide h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .feature-wide p { font-size: 14px; color: #6b7280; }
+    .ai-icon { color: #4c45ce; background: #eef2ff; padding: 8px; border-radius: 8px; font-size: 16px; }
+
+    /* ABOUT CONTENT TYPOGRAPHY FIXES */
+    #about h1 { font-size: 36px; font-weight: 700; margin-bottom: 16px; color: #111827; }
+    #about h2 { font-size: 24px; font-weight: 600; margin-bottom: 12px; color: #1f2937; }
+    #about p { font-size: 16px; line-height: 1.6; color: #4b5563; margin-bottom: 16px; }
+    #about ul li { font-size: 16px; color: #4b5563; margin-bottom: 8px; list-style-position: inside; }
+
+    /* RESPONSIVE BREAKPOINTS WITH MOBILE DROPDOWN NAVIGATION FIX */
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-top: 1px solid #f3f4f6;
+        gap: 16px;
+        text-align: center;
+      }
+      
+      .nav-menu.active { display: flex; }
+      .nav-menu a { margin: 8px 0; width: 100%; font-size: 16px; }
+      .nav-menu .btn { width: 100%; justify-content: center; }
+
       .hero { grid-template-columns: 1fr; gap: 30px; text-align: center; }
       .hero-left { order: 2; }
       .hero-right { order: 1; }
       .features { grid-template-columns: 1fr; }
+      .feature-wide { grid-column: span 1; }
       .cta { flex-direction: column; }
       .stats-card { left: 50%; transform: translateX(-50%); bottom: -24px; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      
+      #about h1 { font-size: 28px; }
+      #about h2 { font-size: 20px; }
     }
-     .btn i {
-  margin-left: 6px;
-  font-size: 14px;
-}
-footer h3,
-footer h4 {
-  color: #ffffff;
-}
-.feature-wide {
-  grid-column: span 2;        /* covers both columns */
-  background: #ffffff;
-  padding: 18px 22px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
 
-.feature-wide:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-}
-.feature-wide:hover .fa-arrow-right {
-  transform: translateX(4px);
-  transition: transform 0.2s ease;
-}
-
-
-.feature-wide--big {
-  width: calc(100% + 300px);
-  margin-left: -1px;
-}
-
-/* Make last wide box text same as normal feature boxes */
-.feature-wide h4 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.feature-wide p {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.ai-icon {
-  color: #4c45ce;               /* same as primary button */
-  background: #eef2ff;          /* soft indigo bg */
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
-  <div class="container nav">
-    <div class="logo"><i class="fa-solid fa-arrow-up-right-dots"></i> <span>PlacementorAI</span></div>
-    <nav>
+  <div class="container nav" style="position: relative;">
+    <div class="logo">
+      <i class="fa-solid fa-arrow-up-right-dots"></i> 
+      <span>PlacementorAI</span>
+    </div>
+    
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+      <i class="fa-solid fa-bars" id="menu-icon"></i>
+    </button>
+
+    <nav class="nav-menu" id="nav-links-target">
       <a href="index.html">Home</a>
+      <a href="About.html">About Us</a>
       <a href="contact.html">Contact</a>
       <a href="register.html">Sign Up</a>
       <a href="login.html" class="login">Login</a>
-
-<a  href="register.html" class="btn primary">
-  Get Started
-  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-</a>    </nav>
+      <a href="register.html" class="btn primary" style="color: #ffffff !important;">
+        Get Started
+        <i class="fa-solid fa-arrow-up-right-from-square" style="color: #ffffff !important;"></i>
+      </a>    
+    </nav>
   </div>
 </header>
 
 <section id="about">
   <div class="container">
     <br/><br/>
-
     <h1>About PlacementorAI</h1>
-
     <p>
       PlacementorAI is a smart and user-friendly placement management system 
       designed to simplify campus recruitment for students, recruiters, and administrators.
     </p>
-
     <p>
       The platform ensures a structured and transparent hiring process by clearly 
       separating user roles and responsibilities. Students can explore job opportunities 
       based on their eligibility, recruiters can manage applications efficiently, 
       and admins maintain full control over the system.
     </p>
-<br/><br/>
+    <br/><br/>
 
     <h2>Our Mission</h2>
     <p>
@@ -246,18 +244,17 @@ footer h4 {
       for everyone involved, while providing AI-powered guidance to help students 
       prepare better for their careers.
     </p>
-<br/><br/>
+    <br/><br/>
 
     <h2>What Makes Us Unique?</h2>
     <ul>
-      <li style="margin-left: 20px;"> Role-based system for better security and clarity</li>
-      <li style="margin-left: 20px;"> Only eligible and approved jobs are shown to students</li>
-      <li style="margin-left: 20px;"> Transparent application tracking</li>
-      <li style="margin-left: 20px;"> AI-powered career and interview guidance</li>
-      <li style="margin-left: 20px;"> Clean and easy-to-use interface</li>
+      <li>Role-based system for better security and clarity</li>
+      <li>Only eligible and approved jobs are shown to students</li>
+      <li>Transparent application tracking</li>
+      <li>AI-powered career and interview guidance</li>
+      <li>Clean and easy-to-use interface</li>
     </ul>
-
-<br/><br/>
+    <br/><br/>
 
     <h2>How It Works</h2>
     <p>
@@ -265,8 +262,7 @@ footer h4 {
       and admins supervise the overall process. This separation ensures there are no 
       conflicts or unauthorized actions within the system.
     </p>
-<br/><br/>
-    
+    <br/><br/>
     <p>
       We aim to continuously improve the platform and make placement management smarter 
       with the help of technology.
@@ -275,10 +271,6 @@ footer h4 {
   <br/><br/>
 </section>
 
-
-
-
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -320,7 +312,6 @@ footer h4 {
   </div>
 </footer>
 
-<!-- DOCUMENTATION PORTAL -->
 <div id="portal-overlay" class="portal-overlay">
   <div class="portal-content">
     <div class="portal-header">
@@ -333,12 +324,10 @@ footer h4 {
       <button class="portal-nav-btn" id="btn-terms" onclick="switchPortalTab('terms')">Terms</button>
     </div>
     <div class="portal-body" id="portal-body">
-      <!-- Content will be injected here -->
-    </div>
+      </div>
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
 <div id="modal" class="modal">
   <div class="modal-box">
     <h2 id="modal-title">Login</h2>
@@ -353,8 +342,24 @@ footer h4 {
   </div>
 </div>
 
-<!-- SCRIPTS -->
 <script>
+  // Mobile Hamburger Toggle Logic
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const navLinksTarget = document.getElementById('nav-links-target');
+  const menuIcon = document.getElementById('menu-icon');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    navLinksTarget.classList.toggle('active');
+    
+    if(navLinksTarget.classList.contains('active')) {
+      menuIcon.classList.remove('fa-bars');
+      menuIcon.classList.add('fa-xmark');
+    } else {
+      menuIcon.classList.remove('fa-xmark');
+      menuIcon.classList.add('fa-bars');
+    }
+  });
+
   // Modal JS
   const modal = document.getElementById("modal");
   const title = document.getElementById("modal-title");
@@ -427,27 +432,19 @@ footer h4 {
   }
 
   function switchPortalTab(tab) {
-    // Update content
     portalBody.innerHTML = portalContent[tab];
-    
-    // Update active button
     document.querySelectorAll('.portal-nav-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById('btn-' + tab).classList.add('active');
-    
-    // Update title
     const titles = { faq: 'FAQ', privacy: 'Privacy Policy', terms: 'Terms of Service' };
     portalTitle.innerText = titles[tab];
   }
 
-  // Close on overlay click
   portalOverlay.addEventListener('click', (e) => {
     if (e.target === portalOverlay) closePortal();
   });
 </script>
 <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2026/01/29/16/20260129163015-0ZV4O3BK.js" defer></script>
-
-<!-- Botpress Chatbot Scripts -->
 
 </body>
 </html>
