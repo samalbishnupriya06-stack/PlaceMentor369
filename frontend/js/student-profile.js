@@ -144,6 +144,14 @@ resumeInput?.addEventListener("change", async (e) => {
         const data = await res.json();
         const profile = data.student;
 
+        // Clear previous details first to prevent leftovers
+        fullNameInput.value = "";
+        rollInput.value = "";
+        cgpaInput.value = "";
+        branchSelect.value = "";
+        skills = [];
+        renderSkills();
+
         // Auto-fill forms based on AI extraction
         if (profile.name) fullNameInput.value = profile.name;
         if (profile.roll) rollInput.value = profile.roll;
@@ -275,6 +283,12 @@ saveBtn?.addEventListener("click", async () => {
 // ============================
 document.addEventListener("DOMContentLoaded", () => {
     loadProfile();
+
+    // Attach dynamic input listeners to update profile completion in real-time
+    fullNameInput?.addEventListener("input", updateCompletion);
+    rollInput?.addEventListener("input", updateCompletion);
+    branchSelect?.addEventListener("change", updateCompletion);
+    cgpaInput?.addEventListener("input", updateCompletion);
 });
 
 // ============================

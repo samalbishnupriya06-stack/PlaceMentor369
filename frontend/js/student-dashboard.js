@@ -33,12 +33,12 @@ async function loadProfileCompletion() {
     if (!profile) return;
 
     const filled = [
-      profile.name,
-      profile.roll,
-      profile.branch,
-      profile.cgpa > 0,
-      profile.skills && profile.skills.length > 0,
-      profile.resume
+      profile.name ? profile.name.trim() : "",
+      profile.roll ? profile.roll.trim() : "",
+      profile.branch ? profile.branch.trim() : "",
+      profile.cgpa && profile.cgpa > 0 ? "true" : "",
+      profile.skills && profile.skills.length > 0 ? "true" : "",
+      profile.resume ? "true" : ""
     ].filter(Boolean).length;
 
     const percent = Math.floor((filled / 6) * 100);
