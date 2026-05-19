@@ -37,8 +37,15 @@ export const analyzeResume = async (resumeText) => {
     
     let textOutput = response.text;
     
-    // Clean up any potential markdown formatting the model might mistakenly return
+    // Clean up any potential markdown formatting
     textOutput = textOutput.replace(/```json/gi, '').replace(/```/g, '').trim();
+    
+    // Robust extraction of JSON block to prevent SyntaxError
+    const firstBrace = textOutput.indexOf('{');
+    const lastBrace = textOutput.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1) {
+        textOutput = textOutput.substring(firstBrace, lastBrace + 1);
+    }
     
     const parsedData = JSON.parse(textOutput);
     return parsedData;
