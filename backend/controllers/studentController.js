@@ -175,6 +175,7 @@ export const uploadResume = async (req, res) => {
 
     // Auto-Onboarding
     if (aiResult.name) student.name = aiResult.name;
+    if (aiResult.roll) student.roll = aiResult.roll;
     if (aiResult.college) student.college = aiResult.college;
     if (aiResult.branch) student.branch = aiResult.branch;
     if (aiResult.cgpa !== undefined && aiResult.cgpa !== null) student.cgpa = aiResult.cgpa;
