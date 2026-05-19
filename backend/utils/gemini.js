@@ -17,7 +17,7 @@ export const analyzeResume = async (resumeText) => {
       
       Extract the following fields:
       - "name": The student's full name. If not found, return an empty string.
-      - "roll": The student's college Roll Number, Student ID, or Registration Number (e.g. 24CSB0B36). If not found, return an empty string.
+      - "roll": The student's college Roll Number, Student ID, Enrollment Number, Alphanumeric ID, or Registration Number (e.g., 24CSB0B36, 22-CSE-102). Actively search the entire resume for any unique alphanumeric student identifier, enrollment code, or college registration ID. If not found, return an empty string.
       - "college": The student's college or university. If not found, return an empty string.
       - "branch": The student's degree, major, or branch (e.g., Computer Science, Mechanical). If not found, return an empty string.
       - "cgpa": The student's CGPA or GPA as a number (e.g. 8.5 or 3.8). Extract only the numerical decimal value. If written as a percentage (e.g. 85%), convert it to a 10-point scale (e.g. 8.5). If not found or not specified, return 0.
