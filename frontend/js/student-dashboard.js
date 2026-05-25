@@ -10,6 +10,8 @@ if (!session || !session.token || session.user.role !== "student") {
 const token = session.token;
 const user = session.user;
 
+"use strict";
+
 document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
   initDashboard();
