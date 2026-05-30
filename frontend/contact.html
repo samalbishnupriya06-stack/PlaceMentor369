@@ -272,6 +272,80 @@ body.dark-mode .nav-menu{
 body.dark-mode footer{
   background: #020617;
 }
+body.dark-mode .faq-item{
+  background: #1e293b;
+}
+
+body.dark-mode .faq-question{
+  color: #f8fafc;
+}
+
+body.dark-mode .faq-answer p{
+  color: #cbd5e1;
+}
+/* FAQ Section */
+.faq-section{
+  padding: 60px 0;
+}
+
+.faq-title{
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4f46e5;
+  margin-bottom: 40px;
+}
+
+.faq-container{
+  max-width: 850px;
+  margin: auto;
+}
+
+.faq-item{
+  background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.faq-question{
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 20px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-answer{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer p{
+  padding: 0 20px 20px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.faq-item.active .faq-answer{
+  max-height: 200px;
+}
+
+.faq-item.active .faq-question i{
+  transform: rotate(180deg);
+}
+
+.faq-question i{
+  transition: transform 0.3s ease;
+}
   </style>
 </head>
 
@@ -421,7 +495,65 @@ body.dark-mode footer{
 
     </div>
   </section>
+  <section class="faq-section fade-in">
+  <h2 class="faq-title">Frequently Asked Questions</h2>
 
+  <div class="faq-container">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I apply for a job?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Browse available jobs, select a position that matches your profile,
+          and click the Apply button to submit your application.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is PlacementorAI free for students?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Yes. Students can create profiles, apply for jobs, and track
+          applications at no cost.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How can recruiters post jobs?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Recruiters can register for an account and access the recruiter
+          dashboard to create and manage job postings.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is my personal information secure?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Yes. We follow industry-standard security practices and only share
+          information with recruiters for jobs you apply to.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
   <section class="text-center fade-in">
     <h2 class="text-2xl font-bold mb-4 text-indigo-600">
       Ready to get started?
@@ -636,6 +768,22 @@ themeToggle.addEventListener("click", () => {
     themeIcon.classList.remove("fa-sun");
     themeIcon.classList.add("fa-moon");
   }
+});
+
+</script>
+<script>
+document.querySelectorAll(".faq-question").forEach(question => {
+  question.addEventListener("click", () => {
+    const item = question.parentElement;
+
+    document.querySelectorAll(".faq-item").forEach(faq => {
+      if(faq !== item){
+        faq.classList.remove("active");
+      }
+    });
+
+    item.classList.toggle("active");
+  });
 });
 </script>
 </body>
