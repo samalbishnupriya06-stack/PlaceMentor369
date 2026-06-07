@@ -280,6 +280,119 @@ body.dark-mode footer{
     /* background: #3730a3; */
     transform: translateY(-3px);
 }
+.ai-assistant-section{
+    padding:100px 0;
+}
+
+.ai-card{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.ai-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px;
+    background:#ede9fe;
+    color:#7c3aed;
+    border-radius:999px;
+    font-weight:600;
+}
+
+.ai-left h2{
+    margin-top:20px;
+    font-size:42px;
+    line-height:1.2;
+}
+
+.ai-left p{
+    margin-top:15px;
+    color:#6b7280;
+    line-height:1.8;
+}
+
+.ai-features{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.ai-feature{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:500;
+}
+
+.ai-feature i{
+    color:#7c3aed;
+}
+
+.ai-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-top:30px;
+    background:#7c3aed;
+    color:white;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.ai-btn:hover{
+    background:#6d28d9;
+    transform:translateY(-3px);
+}
+
+.chat-preview{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,.08);
+}
+
+.bot-msg,
+.user-msg{
+    padding:12px 15px;
+    border-radius:12px;
+    margin-bottom:12px;
+}
+
+.bot-msg{
+    background:#ede9fe;
+}
+
+.user-msg{
+    background:#f3f4f6;
+}
+body.dark-mode .chat-preview{
+    background:#1e293b;
+}
+
+body.dark-mode .bot-msg{
+    background:#312e81;
+    color:white;
+}
+
+body.dark-mode .user-msg{
+    background:#334155;
+    color:white;
+}
+
+body.dark-mode .ai-left p{
+    color:#cbd5e1;
+}
+
+body.dark-mode .ai-left h2{
+    color:white;
+}
   </style>
 </head>
 <body>
@@ -434,6 +547,82 @@ body.dark-mode footer{
 
   </div>
 </section>
+
+<section class="ai-assistant-section">
+  <div class="container">
+
+    <div class="ai-card">
+
+      <div class="ai-left">
+        <span class="ai-badge">
+          <i class="fa-solid fa-robot"></i>
+          AI Career Assistant
+        </span>
+
+        <h2>Get Personalized Placement Guidance</h2>
+
+        <p>
+          Our AI assistant helps students prepare for placements by
+          identifying skill gaps, recommending learning resources,
+          suggesting relevant jobs, and providing interview preparation support.
+        </p>
+
+        <div class="ai-features">
+
+          <div class="ai-feature">
+            <i class="fa-solid fa-microphone"></i>
+            Interview Preparation
+          </div>
+
+          <div class="ai-feature">
+            <i class="fa-solid fa-chart-line"></i>
+            Skill Gap Analysis
+          </div>
+
+          <div class="ai-feature">
+            <i class="fa-solid fa-briefcase"></i>
+            Job Recommendations
+          </div>
+
+          <div class="ai-feature">
+            <i class="fa-solid fa-book"></i>
+            Learning Suggestions
+          </div>
+
+        </div>
+
+        <a href="ai-assistant.html" class="ai-btn">
+          Explore AI Assistant
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </div>
+
+      <div class="ai-right">
+
+        <div class="chat-preview">
+
+          <div class="bot-msg">
+            Your React skills match 82% of Frontend Developer roles.
+          </div>
+
+          <div class="user-msg">
+            What should I learn next?
+          </div>
+
+          <div class="bot-msg">
+            I recommend Node.js, REST APIs and System Design fundamentals.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 <footer>
   <div class="container">
     <div class="footer-grid">
