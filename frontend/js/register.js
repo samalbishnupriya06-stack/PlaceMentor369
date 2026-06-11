@@ -22,6 +22,7 @@ const btnText = document.getElementById("btnText");
 const passwordInput = document.getElementById("password");
 const togglePasswordBtn = document.getElementById("togglePassword");
 const eyeIcon = document.getElementById("eyeIcon");
+const passwordErrorEl = document.getElementById("passwordError");
 
 // -------------------------
 // Password Toggle
@@ -45,14 +46,9 @@ registerForm.onsubmit = async (e) => {
   const password = passwordInput.value;
 
   // 1️⃣ Validation Logic
-  const passwordError = document.getElementById("passwordError");
-  if (passwordError) {
-    passwordError.classList.add("hidden");
-  }
+  if (passwordErrorEl) passwordErrorEl.classList.add("hidden");
   if (password.length < 8) {
-    if (passwordError) {
-      passwordError.classList.remove("hidden");
-    }
+    if (passwordErrorEl) passwordErrorEl.classList.remove("hidden");
     return;
   }
 
@@ -83,17 +79,14 @@ registerForm.onsubmit = async (e) => {
       JSON.stringify({ token: data.token, user: data.user })
     );
 
-    showToast("🎉 Account created successfully!", "success");
-    setTimeout(() => {
-      // 5️⃣ Redirect based on role
-      if (data.user.role === "admin") {
-        window.location.href = "admin/admin-dashboard.html";
-      } else if (data.user.role === "recruiter") {
-        window.location.href = "recruiter/recruiter-dashboard.html";
-      } else {
-        window.location.href = "student/student-dashboard.html";
-      }
-    }, 1500);
+    // 5️⃣ Redirect based on role
+    if (data.user.role === "admin") {
+      window.location.href = "admin/admin-dashboard.html";
+    } else if (data.user.role === "recruiter") {
+      window.location.href = "recruiter/recruiter-dashboard.html";
+    } else {
+      window.location.href = "student/student-dashboard.html";
+    }
 
   } catch (err) {
     showToast("Server error. Try again later.", "error");
