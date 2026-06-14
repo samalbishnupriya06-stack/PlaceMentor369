@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken } from "../middlewares/verifyToken.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
 import { recruiterOnly } from "../middlewares/roleMiddleware.js";
 
 import {
@@ -8,7 +8,8 @@ import {
   getAllRecruiterApplications,
   deleteJob,
   updateApplicantStatus,
-  getRecruiterDashboardStats
+  getRecruiterDashboardStats,
+  exportJobApplicantsToCSV
 } from "../controllers/recruiterController.js";
 
 const router = express.Router();
@@ -23,6 +24,7 @@ router.delete("/jobs/:id", verifyToken, recruiterOnly, deleteJob);
 
 // ---------------- APPLICATIONS ----------------
 router.get("/applications", verifyToken, recruiterOnly, getAllRecruiterApplications);
+router.get("/applications/export", verifyToken, recruiterOnly, exportJobApplicantsToCSV);
 router.patch("/applications/status", verifyToken, recruiterOnly, updateApplicantStatus);
 
-export default router;
+export default router; 

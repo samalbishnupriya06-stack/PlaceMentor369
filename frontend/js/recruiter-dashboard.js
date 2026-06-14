@@ -3,14 +3,17 @@
  *********************************/
 
 // Get session & token
-const session = JSON.parse(localStorage.getItem("placementor_session"));
-if (!session || !session.token || session.user.role !== "recruiter") {
-  alert("Session invalid. Please login again.");
-  window.location.href = "login.html";
-}
-const token = session.token;
+//const session = JSON.parse(localStorage.getItem("placementor_session"));
+////if (!session || !session.token || session.user.role !== "recruiter") {
+//  alert("Session invalid. Please login again.");
+//  window.location.href = "login.html";
+//}
+//const token = session.token;
+const token = "";
 
 // ---------------- INIT ----------------
+"use strict";
+
 document.addEventListener("DOMContentLoaded", initDashboard);
 
 async function initDashboard() {
@@ -58,6 +61,16 @@ function renderJobs(jobs, apps) {
 
   container.innerHTML = [...jobs].reverse().map(job => {
     const specificApps = apps.filter(a => a.job?._id === job._id).length;
+    const today = new Date();
+    const deadline = new Date(job.deadline);
+ 
+    const isExpired = deadline < today;
+
+    const jobStatus = isExpired ? "Inactive" : "Active";
+
+    const expiryColor = isExpired
+    ? "text-red-500"
+    : "text-green-600";  
     const badge = statusColors[job.status?.toLowerCase()] || "bg-slate-50 text-slate-600 border-slate-200";
 
     return `
@@ -65,8 +78,15 @@ function renderJobs(jobs, apps) {
         <div>
           <h4 class="font-bold text-slate-800">${job.title}</h4>
           <p class="text-sm text-slate-500">
-            <span class="capitalize">${job.status || 'Pending'}</span> • ${job.location || 'Remote'}
+          <span class="${expiryColor} font-semibold">
+          ${jobStatus}
+          </span>
+          • ${job.location || 'Remote'}
           </p>
+
+        <p class="text-xs mt-1 ${expiryColor}">
+        Deadline: ${deadline.toLocaleDateString()}
+      </p>
         </div>
 
         <div class="flex items-center gap-6">
@@ -78,6 +98,10 @@ function renderJobs(jobs, apps) {
             <button onclick="viewApplicants('${job._id}')" class="bg-white border border-slate-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 shadow-sm transition-colors">
               Manage
             </button>
+            <button onclick="editJob('${job._id}')" 
+           class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">
+           Edit
+          </button>
             <button onclick="deleteJob('${job._id}')" class="text-slate-400 hover:text-red-500 p-2 transition-colors">
               <i data-lucide="trash-2" class="w-5 h-5"></i>
             </button>
@@ -102,6 +126,12 @@ window.deleteJob = async function(jobId) {
     console.error("Delete job error:", err);
     alert("Failed to delete job. Try again.");
   }
+}
+
+// ---------------- EDIT JOB ----------------
+window.editJob = function(jobId) {
+  localStorage.setItem("edit_job_id", jobId);
+  location.href = "postjob.html";
 }
 
 // ---------------- VIEW APPLICANTS ----------------

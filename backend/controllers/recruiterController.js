@@ -1,6 +1,7 @@
-import Job from "../models/Job.js";
+import Job from "../models/job.js";
 import Application from "../models/application.js";
-import mongoose from "mongoose"; 
+import mongoose from "mongoose";
+import { sendStatusUpdateEmail } from "../utils/emailService.js";
 
 /* ======================================================
    CREATE JOB
@@ -10,11 +11,21 @@ export const createJob = async (req, res) => {
     console.log("REQ.USER:", req.user);
     console.log("REQ.BODY:", req.body);
 
-    const recruiterId = req.user.id; // ✅ fixed here
+    const recruiterId = req.user.id;
 
-    if (!recruiterId) return res.status(400).json({ message: "Recruiter ID missing" });
+    if (!recruiterId)
+      return res.status(400).json({ message: "Recruiter ID missing" });
 
-    const { title, company, description, cgpa, branch, skillsRequired, deadline } = req.body;
+    const {
+      title,
+      company,
+      description,
+      cgpa,
+      branch,
+      branches,
+      skillsRequired,
+      deadline,
+    } = req.body;
 
     if (!title || !company || !description || !deadline) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -25,11 +36,11 @@ export const createJob = async (req, res) => {
       company,
       description,
       cgpa,
-      branch,
+      branch: branch || branches || [],
       skillsRequired,
       deadline: new Date(deadline),
       recruiter: recruiterId,
-      status: "approved"
+      status: "pending",
     });
 
     res.status(201).json({ success: true, job });
@@ -38,8 +49,6 @@ export const createJob = async (req, res) => {
     res.status(500).json({ message: "Create job failed" });
   }
 };
-
-
 
 /* ======================================================
    GET RECRUITER JOBS
@@ -59,7 +68,7 @@ export const getRecruiterJobs = async (req, res) => {
 export const getAllRecruiterApplications = async (req, res) => {
   try {
     const jobs = await Job.find({ recruiter: req.user.id }).select("_id");
-    const jobIds = jobs.map(j => j._id);
+    const jobIds = jobs.map((j) => j._id);
 
     const applications = await Application.find({ job: { $in: jobIds } })
       .populate("student", "name branch cgpa resume")
@@ -76,18 +85,17 @@ export const getAllRecruiterApplications = async (req, res) => {
 ====================================================== */
 export const updateApplicantStatus = async (req, res) => {
   try {
-    let { applicationId, status } = req.body;
-    status = status.toLowerCase();
+    const applicationId = req.params.applicationId || req.body.applicationId;
+    const { status } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
-      return res.status(400).json({ message: "Invalid application ID" });
+    if (!applicationId) {
+      return res.status(400).json({ message: "Application ID is required" });
     }
 
-    if (!["shortlisted", "rejected"].includes(status)) {
-      return res.status(400).json({ message: "Invalid status" });
-    }
+    const application = await Application.findById(applicationId)
+      .populate("student", "name email")
+      .populate("job", "title company");
 
-    const application = await Application.findById(applicationId);
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
@@ -95,20 +103,28 @@ export const updateApplicantStatus = async (req, res) => {
     application.status = status;
     await application.save();
 
-    await application.populate([
-      { path: "student", select: "name branch cgpa resume" },
-      { path: "job", select: "title" }
-    ]);
+    if (status === "shortlisted" || status === "rejected") {
+      sendStatusUpdateEmail(
+        application.student.email,
+        application.student.name,
+        application.job.title,
+        application.job.company,
+        status
+      );
+    }
 
-    res.status(200).json({ success: true, application });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to update status" });
+    return res.status(200).json({
+      message: `Application status updated to ${status}`,
+      application,
+    });
+  } catch (error) {
+    console.error("Error updating applicant status:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 /* ======================================================
-   🔥 DASHBOARD STATS (THIS FIXES YOUR ISSUE)
+   DASHBOARD STATS
    GET /api/recruiter/dashboard
 ====================================================== */
 export const getRecruiterDashboardStats = async (req, res) => {
@@ -116,21 +132,21 @@ export const getRecruiterDashboardStats = async (req, res) => {
     const recruiterId = req.user.id;
 
     const jobs = await Job.find({ recruiter: recruiterId }).select("_id");
-    const jobIds = jobs.map(j => j._id);
+    const jobIds = jobs.map((j) => j._id);
 
     const totalApplicants = await Application.countDocuments({
-      job: { $in: jobIds }
+      job: { $in: jobIds },
     });
 
     const shortlisted = await Application.countDocuments({
       job: { $in: jobIds },
-      status: "shortlisted"
+      status: "shortlisted",
     });
 
     res.status(200).json({
       jobsPosted: jobIds.length,
       totalApplicants,
-      shortlisted
+      shortlisted,
     });
   } catch (err) {
     console.error(err);
@@ -139,11 +155,91 @@ export const getRecruiterDashboardStats = async (req, res) => {
 };
 
 /* ======================================================
+   EXPORT APPLICANTS TO CSV
+====================================================== */
+export const exportJobApplicantsToCSV = async (req, res) => {
+  try {
+    const { jobId } = req.query;
+    let applications = [];
+    let filename = "all-applicants.csv";
+
+    if (jobId) {
+      const job = await Job.findOne({ _id: jobId, recruiter: req.user.id });
+      if (!job)
+        return res
+          .status(404)
+          .json({ message: "Job not found or unauthorized" });
+
+      applications = await Application.find({ job: jobId })
+        .populate("student", "name email branch cgpa skills resume")
+        .populate("job", "title");
+
+      filename = `applicants-${jobId}.csv`;
+    } else {
+      const jobs = await Job.find({ recruiter: req.user.id }).select("_id");
+      const jobIds = jobs.map((j) => j._id);
+
+      applications = await Application.find({ job: { $in: jobIds } })
+        .populate("student", "name email branch cgpa skills resume")
+        .populate("job", "title");
+    }
+
+    const headers = [
+      "Job Title",
+      "Name",
+      "Email",
+      "Branch",
+      "CGPA",
+      "Skills",
+      "Resume Link",
+      "Status",
+      "Applied At",
+    ];
+
+    const rows = applications.map((app) => {
+      const student = app.student || {};
+      const job = app.job || {};
+      const skills = student.skills ? student.skills.join("; ") : "N/A";
+
+      return [
+        `"${job.title || "N/A"}"`,
+        `"${student.name || "N/A"}"`,
+        `"${student.email || "N/A"}"`,
+        `"${student.branch || "N/A"}"`,
+        student.cgpa || "N/A",
+        `"${skills}"`,
+        `"${student.resume || "N/A"}"`,
+        app.status,
+        app.createdAt
+          ? new Date(app.createdAt).toLocaleDateString()
+          : "N/A",
+      ].join(",");
+    });
+
+    const csvContent = [headers.join(","), ...rows].join("\n");
+
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${filename}`
+    );
+
+    res.status(200).send(csvContent);
+  } catch (err) {
+    console.error("EXPORT CSV ERROR:", err);
+    res.status(500).json({ message: "Failed to export applicants" });
+  }
+};
+
+/* ======================================================
    DELETE JOB
 ====================================================== */
 export const deleteJob = async (req, res) => {
   try {
-    const job = await Job.findOne({ _id: req.params.id, recruiter: req.user._id });
+    const job = await Job.findOne({
+      _id: req.params.id,
+      recruiter: req.user.id,
+    });
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     await Application.deleteMany({ job: job._id });
