@@ -202,4 +202,58 @@ npm run dev
 Backend runs on:
 
 http://localhost:5000
+```
+---
 
+## 👥 Contributors
+
+Thanks to all the amazing people who contributed to this project ❤️
+
+<a href="https://github.com/NileshBagade734-ux/PlaceMentor369/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=NileshBagade734-ux/PlaceMentor369" />
+</a>
+
+
+## ⭐ Project Support
+
+<p align="center">
+  <a href="https://github.com/NileshBagade734-ux/PlaceMentor369/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/NileshBagade734-ux/PlaceMentor369?style=social">
+  </a>
+
+  <a href="https://github.com/NileshBagade734-ux/PlaceMentor369/network/members">
+    <img alt="Forks" src="https://img.shields.io/github/forks/NileshBagade734-ux/PlaceMentor369?style=social">
+  </a>
+</p>
+## 🌐 Live Demo
+- **Live Site:** https://place-mentor369.vercel.app
+
+
+## 🐳 Run with Docker (Recommended)
+
+No need to install Node.js or MongoDB manually.
+
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+```bash
+# Clone the repo
+git clone https://github.com/NileshBagade734-ux/PlaceMentor369.git
+cd PlaceMentor369
+
+# Start everything (backend + MongoDB)
+docker-compose up
+```
+
+Backend will be available at `http://localhost:5000`
+
+To stop:
+```bash
+docker-compose down
+```
+
+To reset the database volume:
+```bash
+docker-compose down -v
+```
+
+> **Note:** The frontend is plain HTML — open `frontend/index.html` via a static server or VS Code Live Server after the backend is running.
