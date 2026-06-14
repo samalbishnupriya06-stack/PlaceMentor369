@@ -2,10 +2,6 @@
  * RECRUITER DASHBOARD JS
  *********************************/
 
-// ---------------- CONFIG ----------------
-const JOBS_API = "http://localhost:5000/api/recruiter/jobs";
-const APPS_API = "http://localhost:5000/api/recruiter/applications";
-
 // Get session & token
 //const session = JSON.parse(localStorage.getItem("placementor_session"));
 ////if (!session || !session.token || session.user.role !== "recruiter") {
@@ -22,33 +18,19 @@ document.addEventListener("DOMContentLoaded", initDashboard);
 
 async function initDashboard() {
   try {
-    // -------- FETCH JOBS --------
-    const jobsRes = await fetch(JOBS_API, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!jobsRes.ok) throw new Error("Failed to fetch jobs");
-    const jobs = await jobsRes.json();
+    const jobs = await apiRequest("/recruiter/jobs", "GET");
+    const applications = await apiRequest("/recruiter/applications", "GET");
 
-    // -------- FETCH APPLICATIONS --------
-    const appsRes = await fetch(APPS_API, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!appsRes.ok) throw new Error("Failed to fetch applications");
-    const applications = await appsRes.json();
-
-    // -------- STATS --------
     const jobsCount = jobs.length;
     const appsCount = applications.length;
     const shortlistedCount = applications.filter(
       a => a.status?.toLowerCase() === "shortlisted"
     ).length;
 
-    // -------- UPDATE DOM STATS --------
     document.getElementById("count-jobs").textContent = jobsCount;
     document.getElementById("count-apps").textContent = appsCount;
     document.getElementById("count-shortlisted").textContent = shortlistedCount;
 
-    // -------- RENDER JOBS --------
     renderJobs(jobs, applications);
 
   } catch (err) {
@@ -138,15 +120,7 @@ window.deleteJob = async function(jobId) {
   if(!confirm("Are you sure you want to delete this job?")) return;
 
   try {
-    const res = await fetch(`${JOBS_API}/${jobId}`, {
-      method: "DELETE",
-      headers: { 
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    if (!res.ok) throw new Error("Failed to delete job");
-
+    await apiRequest(`/recruiter/jobs/${jobId}`, "DELETE");
     initDashboard();
   } catch (err) {
     console.error("Delete job error:", err);
