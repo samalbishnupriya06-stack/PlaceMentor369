@@ -15,6 +15,8 @@ if (!session || !session.token || session.user.role !== "recruiter") {
 const token = session.token;
 
 // ---------------- INIT ----------------
+"use strict";
+
 document.addEventListener("DOMContentLoaded", initDashboard);
 
 async function initDashboard() {
